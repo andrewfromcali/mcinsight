@@ -276,7 +276,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>10</integer>
+									<integer>3</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -319,7 +319,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>ValueInfo.h</string>
+								<string>EchoServer.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>ValueInfo.h</string>
+										<string>EchoServer.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>001022760E280A4B006BD8F1</string>
+										<string>001022860E281063006BD8F1</string>
 										<key>history</key>
 										<array>
 											<string>003649A10E25BF71000F6F2C</string>
@@ -345,9 +345,9 @@
 											<string>001022690E280A4B006BD8F1</string>
 											<string>0010226A0E280A4B006BD8F1</string>
 											<string>0010226B0E280A4B006BD8F1</string>
-											<string>0010226C0E280A4B006BD8F1</string>
-											<string>0010226D0E280A4B006BD8F1</string>
-											<string>0010226E0E280A4B006BD8F1</string>
+											<string>001022770E280D35006BD8F1</string>
+											<string>001022780E280D35006BD8F1</string>
+											<string>001022790E280D35006BD8F1</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -469,6 +469,9 @@
 											<string>001022730E280A4B006BD8F1</string>
 											<string>001022740E280A4B006BD8F1</string>
 											<string>001022750E280A4B006BD8F1</string>
+											<string>0010227A0E280D35006BD8F1</string>
+											<string>0010227B0E280D35006BD8F1</string>
+											<string>0010227C0E280D35006BD8F1</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>

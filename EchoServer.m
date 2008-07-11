@@ -106,10 +106,35 @@ static NSMutableDictionary *dict;
       
       [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
     } else if ([command isEqualToString:@"incr"]) {
-      [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
+      ValueInfo *temp = [dict objectForKey:vi.key];
+      if (temp) {
+        int num = [[[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding] intValue];
+        NSString *num2 = [NSString stringWithFormat:@"%d", num+1];
+        
+        temp.data = [NSMutableData alloc];
+        [temp.data appendData:[num2 dataUsingEncoding:NSASCIIStringEncoding]];
+        [dict setObject:temp forKey:vi.key];
+        
+        [sock writeData:temp.data withTimeout:-1 tag:0];
+      } else       
+        [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
     } else if ([command isEqualToString:@"decr"]) {
-      [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
+       ValueInfo *temp = [dict objectForKey:vi.key];
+       if (temp) {
+         int num = [[[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding] intValue];
+         NSString *num2 = [NSString stringWithFormat:@"%d", num-1];
+         temp.data = [NSMutableData alloc];
+         [temp.data appendData:[num2 dataUsingEncoding:NSASCIIStringEncoding]];
+         [dict setObject:temp forKey:vi.key];
+         
+         [sock writeData:temp.data withTimeout:-1 tag:0];
+       } else       
+         [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];         
     } else if ([command isEqualToString:@"delete"]) {
+      ValueInfo *temp = [dict objectForKey:vi.key];
+      if (temp) {
+        [[EchoServer getDict] removeObjectForKey:vi.key];
+      }
       [sock writeData:[@"DELETED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
     }
   }
