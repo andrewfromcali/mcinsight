@@ -13,11 +13,13 @@
   NSMutableData *data;
   NSString *key;
   int expiry;
+  int hits;
   NSTimeInterval insertedAt;
 }
 
 @property (nonatomic, retain) NSMutableData *data;
 @property (nonatomic, retain) NSString *key;
 @property int expiry;
+@property int hits;
 @property NSTimeInterval insertedAt;
 @end

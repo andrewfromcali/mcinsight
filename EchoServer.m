@@ -71,7 +71,7 @@ static NSMutableDictionary *dict;
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     NSArray *listItems = [str2 componentsSeparatedByString:@" "];
-    vi = [ValueInfo alloc];
+    vi = [[ValueInfo alloc] init];
     
     NSString *command = [listItems objectAtIndex:0];
     vi.key = [listItems objectAtIndex:1];
@@ -89,12 +89,19 @@ static NSMutableDictionary *dict;
       // VALUE session:99e825b027f10f2688b0a67ec570acca 0 61\r\n
       // ewfjwekfjwekfjwekfjwekfjkwefjk\r\n
       // END
-      ValueInfo *temp = [dict objectForKey:vi.key];
-      if (temp) {
-        NSString *res = [NSString stringWithFormat:@"VALUE %@ 0 %d\r\n", temp.key, [temp.data length]];
-        [sock writeData:[res dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
-        [sock writeData:temp.data withTimeout:-1 tag:0];
-        [sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];        
+      int i = 1;
+      while (true) {
+        ValueInfo *temp = [dict objectForKey:[listItems objectAtIndex:i]];
+        if (temp) {
+          temp.hits++;
+          NSString *res = [NSString stringWithFormat:@"VALUE %@ 0 %d\r\n", temp.key, [temp.data length]];
+          [sock writeData:[res dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
+          [sock writeData:temp.data withTimeout:-1 tag:0];
+          [sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];        
+        }
+        i++;
+        if (i >= [listItems count])
+          break;
       }
       
       [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];

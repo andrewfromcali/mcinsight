@@ -15,4 +15,10 @@
 @synthesize expiry;
 @synthesize key;
 @synthesize insertedAt;
+@synthesize hits;
+
+-(void) init {
+  hits=0;
+}
+
 @end

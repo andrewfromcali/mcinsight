@@ -69,6 +69,8 @@ static BOOL threadStarted = NO;
   }
   if ([col isEqualToString:@"key size"])
     return [ NSString stringWithFormat: @"%d", [key length]];
+  if ([col isEqualToString:@"hits"])
+    return [ NSString stringWithFormat: @"%d", vi.hits];
   if ([col isEqualToString:@"value size"])
     return [ NSString stringWithFormat: @"%d", [vi.data length]];
   
