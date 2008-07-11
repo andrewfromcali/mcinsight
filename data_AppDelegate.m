@@ -8,12 +8,13 @@ static BOOL threadStarted = NO;
 @implementation data_AppDelegate
 
 @synthesize table;
+@synthesize text;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
   
   if (!threadStarted) {
     [NSThread detachNewThreadSelector:@selector(run) toTarget:self withObject:nil];
-    threadStarted = YES;
+    threadStarted = YES;    
   }
   
   return [[EchoServer getDict] count];
@@ -25,6 +26,21 @@ static BOOL threadStarted = NO;
     [table reloadData];
     sleep(1);
   }
+}
+
+//- (void)tableViewSelectionIsChanging:(NSNotification *)aNotification {
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
+  NSArray *keys = [[EchoServer getDict] allKeys];
+  
+  NSArray *sortedArray = [keys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+  NSString *key = [sortedArray objectAtIndex:rowIndex];
+  ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
+
+  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
+  [text setStringValue:str];
+  
+  [table selectRow:rowIndex byExtendingSelection:false];
+  return true;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
