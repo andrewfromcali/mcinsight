@@ -6,7 +6,8 @@
 {
 	NSMutableArray *sockets;
   BOOL dataMode;
-  int size;  
+  int size;
+  NSMutableData *buff;
 }
 +(NSDictionary*)getDict;
 -(id) init;

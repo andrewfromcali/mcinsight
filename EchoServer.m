@@ -57,8 +57,14 @@ static NSMutableDictionary *dict;
   // [sockets indexOfObject:sock]
   
   if (dataMode) {    
-    dataMode = NO;
-    //    [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];    
+    [buff appendData:data];
+    
+    NSLog(@"%d", [buff length]);
+    if ([buff length] >= size) {
+      dataMode = NO;
+      //[sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];    
+    }
+    
   } else {
     NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
@@ -78,9 +84,10 @@ static NSMutableDictionary *dict;
         [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
       //int expiry = [[listItems objectAtIndex:3] intValue];
       size = [[listItems objectAtIndex:4] intValue];
+      NSLog(@"1: %d", size);
       dataMode = YES;
+      buff = [NSMutableData alloc];
       [dict setObject:@"test" forKey:key];
-      NSLog([dict description]);
       
       [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
     } else if ([command isEqualToString:@"get"] || [command isEqualToString:@"gets"]) {
