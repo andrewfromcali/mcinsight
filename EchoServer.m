@@ -6,7 +6,7 @@ static NSMutableDictionary *dict;
 
 @implementation EchoServer
 
-+(NSDictionary*)getDict {
++(NSMutableDictionary*)getDict {
   return dict;
 }
 
@@ -50,24 +50,18 @@ static NSMutableDictionary *dict;
   // set session:99e825b027f10f2688b0a67ec570acca 0 1800 61\r\n
   // wefwelfkwelfwelfkwelfkwelfwef\r\n
   
-  // get session:99e825b027f10f2688b0a67ec570acca
-  // VALUE session:99e825b027f10f2688b0a67ec570acca 0 61\r\n
-  // ewfjwekfjwekfjwekfjwekfjkwefjk\r\n
-  // END
+
   
   // [sockets indexOfObject:sock]
   
   if (dataMode) {    
     [vi.data appendData:data];
     
-    NSLog(@"%d", [vi.data length]);
     if ([vi.data length] >= size) {
-      dataMode = NO;
-      
-      NSLog(@"1");
+      dataMode = NO;      
+      [vi.data setLength:[vi.data length] - 2];
       vi.insertedAt = [[NSDate date] timeIntervalSince1970];
       [dict setObject:vi forKey:vi.key];
-      NSLog(@"2");
 
       [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];    
     }
@@ -75,7 +69,7 @@ static NSMutableDictionary *dict;
   } else {
     NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    
+
     NSArray *listItems = [str2 componentsSeparatedByString:@" "];
     vi = [ValueInfo alloc];
     
@@ -86,13 +80,24 @@ static NSMutableDictionary *dict;
         [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
       vi.expiry = [[listItems objectAtIndex:3] intValue];
       size = [[listItems objectAtIndex:4] intValue];
-      NSLog(@"1: %d", size);
       dataMode = YES;
       vi.data = [NSMutableData alloc];
       
       //[sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
     } else if ([command isEqualToString:@"get"] || [command isEqualToString:@"gets"]) {
-      [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
+      // get session:99e825b027f10f2688b0a67ec570acca
+      // VALUE session:99e825b027f10f2688b0a67ec570acca 0 61\r\n
+      // ewfjwekfjwekfjwekfjwekfjkwefjk\r\n
+      // END
+      ValueInfo *temp = [dict objectForKey:vi.key];
+      if (temp) {
+        NSString *res = [NSString stringWithFormat:@"VALUE %@ 0 %d\r\n", temp.key, [temp.data length]];
+        [sock writeData:[res dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
+        [sock writeData:temp.data withTimeout:-1 tag:0];
+        [sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];        
+      }
+      
+      [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
     } else if ([command isEqualToString:@"incr"]) {
       [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
     } else if ([command isEqualToString:@"decr"]) {

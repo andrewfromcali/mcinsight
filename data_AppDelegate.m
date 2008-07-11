@@ -36,8 +36,8 @@ static BOOL threadStarted = NO;
   NSString *key = [sortedArray objectAtIndex:rowIndex];
   ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
 
-  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
-  [text setStringValue:str];
+//  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
+  [text setStringValue:[vi.data description]];
   
   [table selectRow:rowIndex byExtendingSelection:false];
   return true;
@@ -55,9 +55,18 @@ static BOOL threadStarted = NO;
   if ([col isEqualToString:@"key"])
     return key;
   if ([col isEqualToString:@"inserted ago"])
-    return [ NSString stringWithFormat: @"%f", [[NSDate date] timeIntervalSince1970] - vi.insertedAt];
-  if ([col isEqualToString:@"expires in"])
-    return [ NSString stringWithFormat: @"%d", vi.expiry];
+    return [ NSString stringWithFormat: @"%d", lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt)];
+  if ([col isEqualToString:@"expires in"]) {
+    if (vi.expiry == 0)
+      return @"never";
+    int left = vi.expiry - lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt);
+    if (left < 1) {
+      [[EchoServer getDict] removeObjectForKey:key];
+      return @"---";
+    }
+      
+    return [ NSString stringWithFormat: @"%d", left ];
+  }
   if ([col isEqualToString:@"key size"])
     return [ NSString stringWithFormat: @"%d", [key length]];
   if ([col isEqualToString:@"value size"])

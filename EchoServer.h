@@ -11,7 +11,7 @@
   
   ValueInfo *vi;  
 }
-+(NSDictionary*)getDict;
++(NSMutableDictionary*)getDict;
 -(id) init;
 -(void) dealloc;
 -(void) acceptOnPortString:(NSString *)str;
