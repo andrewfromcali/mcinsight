@@ -39,13 +39,13 @@ static BOOL threadStarted = NO;
   if ([col isEqualToString:@"key"])
     return key;
   if ([col isEqualToString:@"inserted ago"])
-    return @"00:00:30";
+    return [ NSString stringWithFormat: @"%f", [[NSDate date] timeIntervalSince1970] - vi.insertedAt];
   if ([col isEqualToString:@"expires in"])
-    return @"00:30:00";
+    return [ NSString stringWithFormat: @"%d", vi.expiry];
   if ([col isEqualToString:@"key size"])
-    return [ NSString stringWithFormat: @"%d", [key length] ];
+    return [ NSString stringWithFormat: @"%d", [key length]];
   if ([col isEqualToString:@"value size"])
-    return [ NSString stringWithFormat: @"%d", [vi.data length] ];
+    return [ NSString stringWithFormat: @"%d", [vi.data length]];
   
   return @"";
 }

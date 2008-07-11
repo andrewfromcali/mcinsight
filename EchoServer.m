@@ -65,6 +65,7 @@ static NSMutableDictionary *dict;
       dataMode = NO;
       
       NSLog(@"1");
+      vi.insertedAt = [[NSDate date] timeIntervalSince1970];
       [dict setObject:vi forKey:vi.key];
       NSLog(@"2");
 
