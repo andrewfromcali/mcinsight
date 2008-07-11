@@ -1,5 +1,6 @@
 
 #import "EchoServer.h"
+#import "ValueInfo.h"
 
 static NSMutableDictionary *dict;
 
@@ -57,12 +58,17 @@ static NSMutableDictionary *dict;
   // [sockets indexOfObject:sock]
   
   if (dataMode) {    
-    [buff appendData:data];
+    [vi.data appendData:data];
     
-    NSLog(@"%d", [buff length]);
-    if ([buff length] >= size) {
+    NSLog(@"%d", [vi.data length]);
+    if ([vi.data length] >= size) {
       dataMode = NO;
-      //[sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];    
+      
+      NSLog(@"1");
+      [dict setObject:vi forKey:vi.key];
+      NSLog(@"2");
+
+      [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];    
     }
     
   } else {
@@ -70,26 +76,20 @@ static NSMutableDictionary *dict;
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     NSArray *listItems = [str2 componentsSeparatedByString:@" "];
-    
-    if ([listItems count] == 1) {
-      NSData *newline = [@"\n" dataUsingEncoding:NSASCIIStringEncoding];
-      [sock readDataToData:newline withTimeout:-1 tag:tag];
-      return;
-    }
+    vi = [ValueInfo alloc];
     
     NSString *command = [listItems objectAtIndex:0];
-    NSString *key = [listItems objectAtIndex:1];
+    vi.key = [listItems objectAtIndex:1];
     
     if ([command isEqualToString:@"set"] || [command isEqualToString:@"add"] || [command isEqualToString:@"replace"] ||
         [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
-      //int expiry = [[listItems objectAtIndex:3] intValue];
+      vi.expiry = [[listItems objectAtIndex:3] intValue];
       size = [[listItems objectAtIndex:4] intValue];
       NSLog(@"1: %d", size);
       dataMode = YES;
-      buff = [NSMutableData alloc];
-      [dict setObject:@"test" forKey:key];
+      vi.data = [NSMutableData alloc];
       
-      [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
+      //[sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
     } else if ([command isEqualToString:@"get"] || [command isEqualToString:@"gets"]) {
       [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];      
     } else if ([command isEqualToString:@"incr"]) {

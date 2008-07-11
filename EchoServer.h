@@ -1,13 +1,15 @@
 
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
+#import "ValueInfo.h"
 
 @interface EchoServer : NSObject
 {
 	NSMutableArray *sockets;
   BOOL dataMode;
   int size;
-  NSMutableData *buff;
+  
+  ValueInfo *vi;  
 }
 +(NSDictionary*)getDict;
 -(id) init;

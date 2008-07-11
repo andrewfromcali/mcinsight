@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001020AB0E27C111006BD8F1 /* ValueInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 001020AA0E27C111006BD8F1 /* ValueInfo.m */; };
 		0031C4630E25C312001217B5 /* data_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0031C4620E25C312001217B5 /* data_AppDelegate.m */; };
 		0085C0320E265EAE00C14E74 /* Runner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085C0310E265EAE00C14E74 /* Runner.m */; };
 		00FE56340E26559F008DD4BA /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FE56330E26559F008DD4BA /* CoreServices.framework */; };
@@ -19,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		001020A90E27C111006BD8F1 /* ValueInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueInfo.h; sourceTree = "<group>"; };
+		001020AA0E27C111006BD8F1 /* ValueInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValueInfo.m; sourceTree = "<group>"; };
 		0031C4610E25C312001217B5 /* data_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_AppDelegate.h; sourceTree = "<group>"; };
 		0031C4620E25C312001217B5 /* data_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = data_AppDelegate.m; sourceTree = "<group>"; };
 		0085C0300E265EAE00C14E74 /* Runner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Runner.h; sourceTree = "<group>"; };
@@ -64,6 +67,8 @@
 				0031C4620E25C312001217B5 /* data_AppDelegate.m */,
 				0085C0300E265EAE00C14E74 /* Runner.h */,
 				0085C0310E265EAE00C14E74 /* Runner.m */,
+				001020A90E27C111006BD8F1 /* ValueInfo.h */,
+				001020AA0E27C111006BD8F1 /* ValueInfo.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -195,6 +200,7 @@
 				00FE563A0E2655AF008DD4BA /* AsyncSocket.m in Sources */,
 				00FE56500E265CA8008DD4BA /* EchoServer.m in Sources */,
 				0085C0320E265EAE00C14E74 /* Runner.m in Sources */,
+				001020AB0E27C111006BD8F1 /* ValueInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

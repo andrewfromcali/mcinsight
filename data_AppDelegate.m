@@ -1,6 +1,7 @@
 
 #import "data_AppDelegate.h"
 #import "EchoServer.h";
+#import "ValueInfo.h";
 
 static BOOL threadStarted = NO;
 
@@ -32,17 +33,19 @@ static BOOL threadStarted = NO;
   NSArray *keys = [[EchoServer getDict] allKeys];
   
   NSArray *sortedArray = [keys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-  
+  NSString *key = [sortedArray objectAtIndex:rowIndex];
+  ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
+
   if ([col isEqualToString:@"key"])
-    return [sortedArray objectAtIndex:rowIndex];
+    return key;
   if ([col isEqualToString:@"inserted ago"])
     return @"00:00:30";
   if ([col isEqualToString:@"expires in"])
     return @"00:30:00";
   if ([col isEqualToString:@"key size"])
-    return @"19 bytes";
+    return [ NSString stringWithFormat: @"%d", [key length] ];
   if ([col isEqualToString:@"value size"])
-    return @"3.2 KB";
+    return [ NSString stringWithFormat: @"%d", [vi.data length] ];
   
   return @"";
 }
