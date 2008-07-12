@@ -301,7 +301,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>8 117 1903 1056 0 0 1920 1178 </string>
+						<string>8 122 1903 1056 0 0 1920 1178 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -331,7 +331,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>001022860E281063006BD8F1</string>
+										<string>001022870E292F3F006BD8F1</string>
 										<key>history</key>
 										<array>
 											<string>003649A10E25BF71000F6F2C</string>
@@ -485,7 +485,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1695, 740}}</string>
 								<key>RubberWindowFrame</key>
-								<string>8 117 1903 1056 0 0 1920 1178 </string>
+								<string>8 122 1903 1056 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -505,7 +505,7 @@
 								<key>Frame</key>
 								<string>{{0, 745}, {1695, 270}}</string>
 								<key>RubberWindowFrame</key>
-								<string>8 117 1903 1056 0 0 1920 1178 </string>
+								<string>8 122 1903 1056 0 0 1920 1178 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -673,7 +673,7 @@
 		<string>/Users/aa/ginc/mcinsight/mcinsight.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>8 117 1903 1056 0 0 1920 1178 </string>
+	<string>8 122 1903 1056 0 0 1920 1178 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

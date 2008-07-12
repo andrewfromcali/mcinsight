@@ -1,0 +1,11 @@
+After learning how to use Cocoa classes, I started to write "mcinsight" 
+(mem cache insight).
+The idea is to run this stand alone mac application on your dev system 
+instead of a real memcached server.  When you launch it, it opens a socket 
+server on port 11211 (default memcached port) and does everything a real 
+memcached does but with a GUI on top.
+
+You can see every key, click on it and see it's value, it's size, etc.  
+You can sort by keyname, expiring time, etc.  
+
+Sorry, no windows or linux version. Have to upgrade to mac.
