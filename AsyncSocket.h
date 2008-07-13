@@ -13,6 +13,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "ValueInfo.h"
 
 @class AsyncSocket;
 @class AsyncReadPacket;
@@ -85,7 +86,15 @@ typedef enum AsyncSocketError AsyncSocketError;
 	Byte theFlags;
 	
 	long theUserData;
+  
+  BOOL mc_dataMode;
+  int mc_size;  
+  ValueInfo *mc_vi;  
 }
+
+@property (nonatomic, retain) ValueInfo *mc_vi;
+@property BOOL mc_dataMode;
+@property int mc_size;
 
 - (id) init;
 - (id) initWithDelegate:(id)delegate;

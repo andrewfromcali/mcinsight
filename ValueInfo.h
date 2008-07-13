@@ -14,14 +14,14 @@
   NSString *key;
   int expiry;
   int hits;
-  int flag;
+  NSString *flag;
   NSTimeInterval insertedAt;
 }
 
 @property (nonatomic, retain) NSMutableData *data;
 @property (nonatomic, retain) NSString *key;
+@property (nonatomic, retain) NSString *flag;
 @property int expiry;
 @property int hits;
-@property int flag;
 @property NSTimeInterval insertedAt;
 @end

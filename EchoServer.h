@@ -6,10 +6,6 @@
 @interface EchoServer : NSObject
 {
 	NSMutableArray *sockets;
-  BOOL dataMode;
-  int size;
-  
-  ValueInfo *vi;  
 }
 +(NSMutableDictionary*)getDict;
 -(id) init;

@@ -164,6 +164,10 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 
 @implementation AsyncSocket
 
+@synthesize mc_vi;
+@synthesize mc_dataMode;
+@synthesize mc_size;
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -182,6 +186,7 @@ static void MyCFWriteStreamCallback (CFWriteStreamRef stream, CFStreamEventType 
 {
 	self = [super init];
 
+  mc_dataMode = NO;
 	theFlags = 0x00;
 	theDelegate = delegate;
 	theUserData = userData;
