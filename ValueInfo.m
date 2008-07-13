@@ -16,6 +16,7 @@
 @synthesize key;
 @synthesize insertedAt;
 @synthesize hits;
+@synthesize flag;
 
 -(void) init {
   hits=0;

@@ -78,6 +78,7 @@ static NSMutableDictionary *dict;
     
     if ([command isEqualToString:@"set"] || [command isEqualToString:@"add"] || [command isEqualToString:@"replace"] ||
         [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
+      vi.flag = [[listItems objectAtIndex:2] intValue];
       vi.expiry = [[listItems objectAtIndex:3] intValue];
       size = [[listItems objectAtIndex:4] intValue];
       dataMode = YES;
@@ -94,7 +95,7 @@ static NSMutableDictionary *dict;
         ValueInfo *temp = [dict objectForKey:[listItems objectAtIndex:i]];
         if (temp) {
           temp.hits++;
-          NSString *res = [NSString stringWithFormat:@"VALUE %@ 0 %d\r\n", temp.key, [temp.data length]];
+          NSString *res = [NSString stringWithFormat:@"VALUE %@ %d %d\r\n", temp.key, temp.flag, [temp.data length]];
           [sock writeData:[res dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];
           [sock writeData:temp.data withTimeout:-1 tag:0];
           [sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:0];        

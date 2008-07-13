@@ -14,6 +14,7 @@
   NSString *key;
   int expiry;
   int hits;
+  int flag;
   NSTimeInterval insertedAt;
 }
 
@@ -21,5 +22,6 @@
 @property (nonatomic, retain) NSString *key;
 @property int expiry;
 @property int hits;
+@property int flag;
 @property NSTimeInterval insertedAt;
 @end
