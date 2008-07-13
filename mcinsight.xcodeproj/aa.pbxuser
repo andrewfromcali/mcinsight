@@ -243,7 +243,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 156";
 		rLen = 18;
-		rLoc = 6483;
+		rLoc = 7631;
 		rType = 0;
 		vrLen = 954;
 		vrLoc = 5216;
@@ -263,7 +263,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 168";
 		rLen = 0;
-		rLoc = 6978;
+		rLoc = 8126;
 		rType = 0;
 		vrLen = 1489;
 		vrLoc = 2989;
@@ -343,7 +343,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 64";
 		rLen = 0;
-		rLoc = 2980;
+		rLoc = 4128;
 		rType = 0;
 		vrLen = 1332;
 		vrLoc = 1237;
@@ -363,7 +363,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 125";
 		rLen = 0;
-		rLoc = 5487;
+		rLoc = 6635;
 		rType = 0;
 		vrLen = 1207;
 		vrLoc = 3722;
@@ -453,7 +453,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 78";
 		rLen = 0;
-		rLoc = 3719;
+		rLoc = 4867;
 		rType = 0;
 		vrLen = 1418;
 		vrLoc = 1549;
@@ -483,7 +483,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 78";
 		rLen = 0;
-		rLoc = 3719;
+		rLoc = 4867;
 		rType = 0;
 		vrLen = 1418;
 		vrLoc = 1549;
@@ -573,7 +573,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 83";
 		rLen = 0;
-		rLoc = 3959;
+		rLoc = 5107;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 1725;
@@ -593,7 +593,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 83";
 		rLen = 0;
-		rLoc = 3959;
+		rLoc = 5107;
 		rType = 0;
 		vrLen = 1507;
 		vrLoc = 1725;
@@ -623,7 +623,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 68";
 		rLen = 0;
-		rLoc = 2979;
+		rLoc = 4127;
 		rType = 0;
 		vrLen = 1007;
 		vrLoc = 1178;
@@ -643,7 +643,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 71";
 		rLen = 0;
-		rLoc = 2696;
+		rLoc = 3844;
 		rType = 0;
 		vrLen = 1012;
 		vrLoc = 1178;
@@ -653,7 +653,7 @@
 		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
 		name = "EchoServer.m: 81";
 		rLen = 0;
-		rLoc = 2985;
+		rLoc = 4133;
 		rType = 0;
 		vrLen = 1454;
 		vrLoc = 1623;
@@ -717,6 +717,16 @@
 		rType = 0;
 		vrLen = 747;
 		vrLoc = 853;
+	};
+	000BB3760E2A7C98009BBF2D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 00FE564F0E265CA8008DD4BA /* EchoServer.m */;
+		name = "EchoServer.m: 102";
+		rLen = 0;
+		rLoc = 3236;
+		rType = 0;
+		vrLen = 1777;
+		vrLoc = 2022;
 	};
 	00101FBF0E26CCF3006BD8F1 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1065,9 +1075,9 @@
 	};
 	00FE564F0E265CA8008DD4BA /* EchoServer.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1653.87, 5575}}";
-			sepNavSelRange = "{1357, 0}";
-			sepNavVisRange = "{853, 747}";
+			sepNavIntBoundsRect = "{{0, 0}, {1653.87, 5775}}";
+			sepNavSelRange = "{3236, 0}";
+			sepNavVisRange = "{2022, 1777}";
 			sepNavWindowFrame = "{{15, 207}, {1387, 966}}";
 		};
 	};
@@ -1236,6 +1246,7 @@
 			000BB3710E2A7A49009BBF2D /* PBXTextBookmark */ = 000BB3710E2A7A49009BBF2D /* PBXTextBookmark */;
 			000BB3720E2A7A49009BBF2D /* PBXTextBookmark */ = 000BB3720E2A7A49009BBF2D /* PBXTextBookmark */;
 			000BB3730E2A7A49009BBF2D /* PBXTextBookmark */ = 000BB3730E2A7A49009BBF2D /* PBXTextBookmark */;
+			000BB3760E2A7C98009BBF2D /* PBXTextBookmark */ = 000BB3760E2A7C98009BBF2D /* PBXTextBookmark */;
 			00101FBF0E26CCF3006BD8F1 = 00101FBF0E26CCF3006BD8F1 /* PBXTextBookmark */;
 			001020D40E27C476006BD8F1 = 001020D40E27C476006BD8F1 /* PBXTextBookmark */;
 			001020D50E27C476006BD8F1 = 001020D50E27C476006BD8F1 /* PBXTextBookmark */;

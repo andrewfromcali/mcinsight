@@ -88,6 +88,24 @@ static NSMutableDictionary *dict;
       } else if ([sock.mc_vi.command isEqualToString:@"set"]) {
         [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
         [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+      } else if ([sock.mc_vi.command isEqualToString:@"append"]) {
+        if (temp != nil) {
+          [temp.data appendData:sock.mc_vi.data];
+          [dict setObject:temp forKey:sock.mc_vi.key];
+          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+        } else
+          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];        
+      } else if ([sock.mc_vi.command isEqualToString:@"prepend"]) {
+        if (temp != nil) {
+          [sock.mc_vi.data appendData:temp.data];
+          temp.data = sock.mc_vi.data;
+          [dict setObject:temp forKey:sock.mc_vi.key];
+          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+        } else
+          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];        
+      } else if ([sock.mc_vi.command isEqualToString:@"cas"]) {
+        [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
+        [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"replace"]) {
         if (temp != nil) {
           [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
