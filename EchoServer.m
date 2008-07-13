@@ -120,13 +120,14 @@ static NSMutableDictionary *dict;
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     NSArray *listItems = [str2 componentsSeparatedByString:@" "];
-    sock.mc_vi = [[ValueInfo alloc] init];
     
     NSString *command = [listItems objectAtIndex:0];
-    sock.mc_vi.key = [listItems objectAtIndex:1];
+    NSString *key = [listItems objectAtIndex:1];
     
     if ([command isEqualToString:@"set"] || [command isEqualToString:@"add"] || [command isEqualToString:@"replace"] ||
         [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
+      sock.mc_vi = [[ValueInfo alloc] init];
+      sock.mc_vi.key = [listItems objectAtIndex:1];
       sock.mc_vi.flag = [listItems objectAtIndex:2];
       sock.mc_vi.expiry = [[listItems objectAtIndex:3] intValue];
       sock.mc_size = [[listItems objectAtIndex:4] intValue];
@@ -155,7 +156,7 @@ static NSMutableDictionary *dict;
       
       [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
     } else if ([command isEqualToString:@"incr"]) {
-      ValueInfo *temp = [self getVI:sock.mc_vi.key];
+      ValueInfo *temp = [self getVI:key];
 
       if (temp) {
         // TODO: real incr
@@ -163,16 +164,16 @@ static NSMutableDictionary *dict;
       } else       
         [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];      
     } else if ([command isEqualToString:@"decr"]) {
-      ValueInfo *temp = [self getVI:sock.mc_vi.key];
+      ValueInfo *temp = [self getVI:key];
        if (temp) {
          // TODO: real decr
          [sock writeData:[@"0\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
        } else       
          [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
     } else if ([command isEqualToString:@"delete"]) {
-      ValueInfo *temp = [dict objectForKey:sock.mc_vi.key];
+      ValueInfo *temp = [dict objectForKey:key];
       if (temp) {
-        [[EchoServer getDict] removeObjectForKey:sock.mc_vi.key];
+        [[EchoServer getDict] removeObjectForKey:key];
       }
       [sock writeData:[@"DELETED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
     }
