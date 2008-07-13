@@ -12,6 +12,7 @@
 @interface ValueInfo : NSObject {
   NSMutableData *data;
   NSString *key;
+  NSString *command;
   int expiry;
   int hits;
   NSString *flag;
@@ -20,6 +21,7 @@
 
 @property (nonatomic, retain) NSMutableData *data;
 @property (nonatomic, retain) NSString *key;
+@property (nonatomic, retain) NSString *command;
 @property (nonatomic, retain) NSString *flag;
 @property int expiry;
 @property int hits;

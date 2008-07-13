@@ -17,6 +17,7 @@
 @synthesize insertedAt;
 @synthesize hits;
 @synthesize flag;
+@synthesize command;
 
 -(void) init {
   hits=0;
