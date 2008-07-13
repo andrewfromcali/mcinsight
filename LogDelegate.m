@@ -25,7 +25,7 @@
   LogInfo *info = [[EchoServer getLog] objectAtIndex:rowIndex];
   
   if ([col isEqualToString:@"#"])
-    return @"1";
+    return [NSString stringWithFormat:@"%d", rowIndex];
   if ([col isEqualToString:@"data"])
     return info.data;
   

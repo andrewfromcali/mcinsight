@@ -228,6 +228,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -276,8 +278,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
-									<integer>1</integer>
+									<integer>22</integer>
+									<integer>19</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -312,14 +314,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>EchoServer.m</string>
+								<string>LogDelegate.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -327,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>EchoServer.m</string>
+										<string>LogDelegate.m</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>000BB3F70E2A9E07009BBF2D</string>
+										<string>000BB4000E2A9F9B009BBF2D</string>
 										<key>history</key>
 										<array>
 											<string>003649A10E25BF71000F6F2C</string>
@@ -347,11 +347,11 @@
 											<string>000BB3BC0E2A9DEA009BBF2D</string>
 											<string>000BB3BD0E2A9DEA009BBF2D</string>
 											<string>000BB3BE0E2A9DEA009BBF2D</string>
-											<string>000BB3BF0E2A9DEA009BBF2D</string>
 											<string>000BB3C00E2A9DEA009BBF2D</string>
 											<string>000BB3C10E2A9DEA009BBF2D</string>
 											<string>000BB3C20E2A9DEA009BBF2D</string>
-											<string>000BB3C30E2A9DEA009BBF2D</string>
+											<string>000BB3FB0E2A9EB7009BBF2D</string>
+											<string>000BB3FC0E2A9EB7009BBF2D</string>
 										</array>
 										<key>prevStack</key>
 										<array>
@@ -460,6 +460,7 @@
 											<string>000BB3F00E2A9DEA009BBF2D</string>
 											<string>000BB3F10E2A9DEA009BBF2D</string>
 											<string>000BB3F20E2A9DEA009BBF2D</string>
+											<string>000BB3FD0E2A9EB7009BBF2D</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
