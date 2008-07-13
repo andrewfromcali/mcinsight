@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000BB3A40E2A986B009BBF2D /* LogDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BB3A30E2A986B009BBF2D /* LogDelegate.m */; };
+		000BB3AB0E2A9B3C009BBF2D /* LogInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 000BB3AA0E2A9B3C009BBF2D /* LogInfo.m */; };
 		001020AB0E27C111006BD8F1 /* ValueInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 001020AA0E27C111006BD8F1 /* ValueInfo.m */; };
 		0031C4630E25C312001217B5 /* data_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0031C4620E25C312001217B5 /* data_AppDelegate.m */; };
 		0085C0320E265EAE00C14E74 /* Runner.m in Sources */ = {isa = PBXBuildFile; fileRef = 0085C0310E265EAE00C14E74 /* Runner.m */; };
@@ -20,6 +22,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		000BB3A20E2A986B009BBF2D /* LogDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogDelegate.h; sourceTree = "<group>"; };
+		000BB3A30E2A986B009BBF2D /* LogDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogDelegate.m; sourceTree = "<group>"; };
+		000BB3A90E2A9B3C009BBF2D /* LogInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogInfo.h; sourceTree = "<group>"; };
+		000BB3AA0E2A9B3C009BBF2D /* LogInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogInfo.m; sourceTree = "<group>"; };
 		001020A90E27C111006BD8F1 /* ValueInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ValueInfo.h; sourceTree = "<group>"; };
 		001020AA0E27C111006BD8F1 /* ValueInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ValueInfo.m; sourceTree = "<group>"; };
 		0031C4610E25C312001217B5 /* data_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_AppDelegate.h; sourceTree = "<group>"; };
@@ -69,6 +75,10 @@
 				0085C0310E265EAE00C14E74 /* Runner.m */,
 				001020A90E27C111006BD8F1 /* ValueInfo.h */,
 				001020AA0E27C111006BD8F1 /* ValueInfo.m */,
+				000BB3A20E2A986B009BBF2D /* LogDelegate.h */,
+				000BB3A30E2A986B009BBF2D /* LogDelegate.m */,
+				000BB3A90E2A9B3C009BBF2D /* LogInfo.h */,
+				000BB3AA0E2A9B3C009BBF2D /* LogInfo.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -201,6 +211,8 @@
 				00FE56500E265CA8008DD4BA /* EchoServer.m in Sources */,
 				0085C0320E265EAE00C14E74 /* Runner.m in Sources */,
 				001020AB0E27C111006BD8F1 /* ValueInfo.m in Sources */,
+				000BB3A40E2A986B009BBF2D /* LogDelegate.m in Sources */,
+				000BB3AB0E2A9B3C009BBF2D /* LogInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

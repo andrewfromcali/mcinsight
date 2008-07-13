@@ -1,19 +1,26 @@
 
 #import "EchoServer.h"
 #import "ValueInfo.h"
+#import "LogInfo.h"
 
 static NSMutableDictionary *dict;
+static NSMutableArray *loggy;
+
 
 @implementation EchoServer
 
 +(NSMutableDictionary*)getDict {
   return dict;
 }
++(NSMutableArray*)getLog {
+  return loggy;
+}
 
 -(id) init
 {
 	self = [super init];
   dict = [NSMutableDictionary dictionary];
+  loggy  = [NSMutableArray array];
 	sockets = [[NSMutableArray alloc] initWithCapacity:2];
 
 	AsyncSocket *acceptor = [[AsyncSocket alloc] initWithDelegate:self];
@@ -119,6 +126,11 @@ static NSMutableDictionary *dict;
     NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
+    LogInfo *info = [LogInfo alloc];
+    info.data = str2;
+    info.sid = tag;
+    [loggy addObject:info];
+    
     NSArray *listItems = [str2 componentsSeparatedByString:@" "];
     
     NSString *command = [listItems objectAtIndex:0];

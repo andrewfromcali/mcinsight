@@ -8,6 +8,7 @@
 	NSMutableArray *sockets;
 }
 +(NSMutableDictionary*)getDict;
++(NSMutableArray*)getLog;
 -(id) init;
 -(void) dealloc;
 -(void) acceptOnPortString:(NSString *)str;
