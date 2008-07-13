@@ -26,8 +26,15 @@
   
   if ([col isEqualToString:@"#"])
     return [NSString stringWithFormat:@"%d", rowIndex];
+  if ([col isEqualToString:@"id"])
+    return [NSString stringWithFormat:@"%d", info.sid];
   if ([col isEqualToString:@"data"])
     return info.data;
+  if ([col isEqualToString:@"direction"]) {
+    if (info.direction)
+      return @"OUT";
+    return @"IN";
+  }
   
   return @"";
 }

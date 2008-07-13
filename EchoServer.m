@@ -68,13 +68,21 @@ static NSMutableArray *loggy;
   return temp;
 }
 
+-(void)sendOut:(AsyncSocket *)sock string:(NSString *)string tag:(long)tag {
+  LogInfo *info = [LogInfo alloc];
+  info.data = string;
+  info.sid = tag;
+  info.direction = YES;
+  [loggy addObject:info];
+  
+  [sock writeData:[[string stringByAppendingString:@"\r\n"] dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag]; 
+}
+
 -(void) onSocket:(AsyncSocket *)sock didReadData:(NSData*)data withTag:(long)tag
 {
   // set session:99e825b027f10f2688b0a67ec570acca 0 1800 61\r\n
   // wefwelfkwelfwelfkwelfkwelfwef\r\n
-  
-  NSLog(@"tag: %d", tag);
-    
+      
   if (sock.mc_dataMode) {    
     [sock.mc_vi.data appendData:data];
     
@@ -83,42 +91,47 @@ static NSMutableArray *loggy;
       [sock.mc_vi.data setLength:[sock.mc_vi.data length] - 2];
       sock.mc_vi.insertedAt = [[NSDate date] timeIntervalSince1970];
       
+      LogInfo *info = [LogInfo alloc];
+      info.data = @"BINARY DATA";
+      info.sid = tag;
+      [loggy addObject:info];
+      
       ValueInfo *temp = [self getVI:sock.mc_vi.key];
       
       if ([sock.mc_vi.command isEqualToString:@"add"]) {
         if (temp == nil) {
           [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];    
+          [self sendOut:sock string:@"STORED" tag:tag];
         }
         else
-          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:@"NOT_STORED" tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"set"]) {
         [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-        [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+        [self sendOut:sock string:@"STORED" tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"append"]) {
         if (temp != nil) {
           [temp.data appendData:sock.mc_vi.data];
           [dict setObject:temp forKey:sock.mc_vi.key];
-          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:@"STORED" tag:tag];
         } else
-          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];        
+          [self sendOut:sock string:@"NOT_STORED" tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"prepend"]) {
         if (temp != nil) {
           [sock.mc_vi.data appendData:temp.data];
           temp.data = sock.mc_vi.data;
           [dict setObject:temp forKey:sock.mc_vi.key];
-          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:@"STORED" tag:tag];
         } else
-          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];        
+          [self sendOut:sock string:@"NOT_STORED" tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"cas"]) {
         [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-        [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+        [self sendOut:sock string:@"STORED" tag:tag];
       } else if ([sock.mc_vi.command isEqualToString:@"replace"]) {
         if (temp != nil) {
           [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-          [sock writeData:[@"STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:@"STORED" tag:tag];
         } else
-          [sock writeData:[@"NOT STORED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:@"NOT_STORED" tag:tag];
       }
     }
     
@@ -156,8 +169,14 @@ static NSMutableArray *loggy;
         ValueInfo *temp = [self getVI:[listItems objectAtIndex:i]];
         if (temp) {
           temp.hits++;
-          NSString *res = [NSString stringWithFormat:@"VALUE %@ %@ %d\r\n", temp.key, temp.flag, [temp.data length]];
-          [sock writeData:[res dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+          [self sendOut:sock string:[NSString stringWithFormat:@"VALUE %@ %@ %d", temp.key, temp.flag, [temp.data length]] tag:tag];
+          
+          LogInfo *info = [LogInfo alloc];
+          info.data = @"BINARY DATA";
+          info.sid = tag;
+          info.direction = YES;
+          [loggy addObject:info];
+          
           [sock writeData:temp.data withTimeout:-1 tag:tag];
           [sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
         }
@@ -166,28 +185,28 @@ static NSMutableArray *loggy;
           break;
       }
       
-      [sock writeData:[@"END\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+      [self sendOut:sock string:@"END" tag:tag];
     } else if ([command isEqualToString:@"incr"]) {
       ValueInfo *temp = [self getVI:key];
 
       if (temp) {
         // TODO: real incr
-        [sock writeData:[@"1\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+        [self sendOut:sock string:@"1" tag:tag];
       } else       
-        [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];      
+        [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"decr"]) {
       ValueInfo *temp = [self getVI:key];
        if (temp) {
          // TODO: real decr
-         [sock writeData:[@"0\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+         [self sendOut:sock string:@"0" tag:tag];
        } else       
-         [sock writeData:[@"NOT_FOUND\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"delete"]) {
       ValueInfo *temp = [dict objectForKey:key];
       if (temp) {
         [[EchoServer getDict] removeObjectForKey:key];
       }
-      [sock writeData:[@"DELETED\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+      [self sendOut:sock string:@"DELETED" tag:tag];
     }
   }
   
