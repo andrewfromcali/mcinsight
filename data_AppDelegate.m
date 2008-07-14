@@ -9,6 +9,7 @@ static BOOL threadStarted = NO;
 
 @synthesize table;
 @synthesize text;
+@synthesize pop;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
   
@@ -46,9 +47,12 @@ static BOOL threadStarted = NO;
   NSString *key = [sortedArray objectAtIndex:rowIndex];
   ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
 
-//  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
+  NSString *pops = [[pop selectedItem] title];
+  if ([pops isEqualToString:@"Hex"])
+    [text setString:[vi.data description]];
+  else if ([pops isEqualToString:@"Plain Text"])
+    [text setString:[[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding]];    
   
-  [text setString:[vi.data description]];
   [text setFont:[NSFont fontWithName:@"Courier" size:14.0]];
 
   [table selectRow:rowIndex byExtendingSelection:false];
