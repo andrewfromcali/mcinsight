@@ -14,9 +14,7 @@ static BOOL threadStarted = NO;
   
   if (!threadStarted) {
     [NSThread detachNewThreadSelector:@selector(run) toTarget:self withObject:nil];
-    threadStarted = YES;    
-    
-    //[[text textStorage] setFont:[NSFont fontWithName:@"Courier" size:12.0]];
+    threadStarted = YES;
   }
   
   return [[EchoServer getDict] count];
@@ -51,7 +49,8 @@ static BOOL threadStarted = NO;
 //  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
   
   [text setString:[vi.data description]];
-  
+  [text setFont:[NSFont fontWithName:@"Courier" size:14.0]];
+
   [table selectRow:rowIndex byExtendingSelection:false];
   return true;
 }
