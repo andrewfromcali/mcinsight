@@ -30,6 +30,16 @@ static BOOL threadStarted = NO;
   }
 }
 
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset {
+  return proposedMax-100;
+}
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset {
+  return proposedMin+100;
+}
+- (CGFloat)splitView:(NSSplitView *)sender constrainSplitPosition:(CGFloat)proposedPosition ofSubviewAt:(NSInteger)offset {
+  return proposedPosition;
+}
+
 //- (void)tableViewSelectionIsChanging:(NSNotification *)aNotification {
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
   NSArray *keys = [[EchoServer getDict] allKeys];
