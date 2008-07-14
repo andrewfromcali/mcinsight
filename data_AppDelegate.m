@@ -51,7 +51,21 @@ static BOOL threadStarted = NO;
   if ([pops isEqualToString:@"Hex"])
     [text setString:[vi.data description]];
   else if ([pops isEqualToString:@"Plain Text"])
-    [text setString:[[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding]];    
+    [text setString:[[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding]];
+  else if ([pops isEqualToString:@"Ruby Objects"]) {    
+    NSString *tempFile = @"/tmp/mc_results";
+    [[NSFileManager defaultManager] createFileAtPath: tempFile contents: 
+     [NSData data] attributes: nil];
+    
+    NSTask *myTask = [[NSTask alloc] init];
+    [myTask setLaunchPath: @"/opt/local/bin/ruby"];
+    [myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/test\"); puts Marshal.load(f.read).inspect; f.close"]];
+    [myTask setStandardOutput: [NSFileHandle  
+                                 fileHandleForWritingAtPath: tempFile]];
+    [myTask launch];
+    [myTask waitUntilExit];
+    
+  }
   
   [text setFont:[NSFont fontWithName:@"Courier" size:14.0]];
 
