@@ -10,13 +10,27 @@
 #import "EchoServer.h"
 #import "LogInfo.h"
 
+static BOOL logThreadStarted = NO;
+
 @implementation LogDelegate
 
 @synthesize table;
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)aTableView {
   
+  if (!logThreadStarted) {
+    [NSThread detachNewThreadSelector:@selector(run) toTarget:self withObject:nil];
+    logThreadStarted = YES;    
+  }
+  
   return [[EchoServer getLog] count];
+}
+
+- (void)run {
+  while (TRUE) {
+    [table reloadData];
+    sleep(1);
+  }
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {

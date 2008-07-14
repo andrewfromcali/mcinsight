@@ -15,6 +15,8 @@ static BOOL threadStarted = NO;
   if (!threadStarted) {
     [NSThread detachNewThreadSelector:@selector(run) toTarget:self withObject:nil];
     threadStarted = YES;    
+    
+    //[[text textStorage] setFont:[NSFont fontWithName:@"Courier" size:12.0]];
   }
   
   return [[EchoServer getDict] count];
