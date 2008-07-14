@@ -37,7 +37,8 @@ static BOOL threadStarted = NO;
   ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
 
 //  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
-  [text setStringValue:[vi.data description]];
+  
+  [text insertText:[vi.data description]];
   
   [table selectRow:rowIndex byExtendingSelection:false];
   return true;

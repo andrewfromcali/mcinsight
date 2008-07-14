@@ -4,10 +4,10 @@
 
 @interface data_AppDelegate : NSObject {
   IBOutlet NSTableView *table;    
-  IBOutlet NSTextField *text;
+  IBOutlet NSTextView *text;
 }
 
 @property (nonatomic, retain) NSTableView *table;
-@property (nonatomic, retain) NSTextField *text;
+@property (nonatomic, retain) NSTextView *text;
 
 @end
