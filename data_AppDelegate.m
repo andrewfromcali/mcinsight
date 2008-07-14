@@ -38,7 +38,7 @@ static BOOL threadStarted = NO;
 
 //  NSString *str = [[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding];
   
-  [text insertText:[vi.data description]];
+  [text setString:[vi.data description]];
   
   [table selectRow:rowIndex byExtendingSelection:false];
   return true;
