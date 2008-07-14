@@ -54,17 +54,19 @@ static BOOL threadStarted = NO;
     [text setString:[[NSString alloc] initWithData:vi.data encoding:NSASCIIStringEncoding]];
   else if ([pops isEqualToString:@"Ruby Objects"]) {    
     NSString *tempFile = @"/tmp/mc_results";
-    [[NSFileManager defaultManager] createFileAtPath: tempFile contents: 
-     [NSData data] attributes: nil];
+    [[NSFileManager defaultManager] createFileAtPath: tempFile contents: [NSData data] attributes: nil];
+    [[NSFileManager defaultManager] createFileAtPath:@"/tmp/mc_data" contents:vi.data attributes: nil];
     
     NSTask *myTask = [[NSTask alloc] init];
-    [myTask setLaunchPath: @"/opt/local/bin/ruby"];
-    [myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/test\"); puts Marshal.load(f.read).inspect; f.close"]];
+    [myTask setLaunchPath: @"/usr/local/bin/ruby"];
+    [myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/mc_data\"); puts Marshal.load(f.read).inspect; f.close"]];
     [myTask setStandardOutput: [NSFileHandle  
                                  fileHandleForWritingAtPath: tempFile]];
     [myTask launch];
     [myTask waitUntilExit];
     
+    [text setString:[[NSString alloc] initWithData:[[NSFileManager defaultManager] contentsAtPath:tempFile]
+                                          encoding:NSASCIIStringEncoding]];
   }
   
   [text setFont:[NSFont fontWithName:@"Courier" size:14.0]];
