@@ -189,23 +189,20 @@ static NSMutableArray *loggy;
     } else if ([command isEqualToString:@"incr"]) {
       ValueInfo *temp = [self getVI:key];
 
-      if (temp) {
-        long aLong = *(const long*)[temp.data bytes];
-        aLong++;
-        
-        sock.mc_vi.data = [NSMutableData dataWithBytes:(const void *)aLong length:sizeof(long)];
-        [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-        [self sendOut:sock string:[NSString stringWithFormat:@"%d", aLong] tag:tag];
+      if (temp) {    
+        temp.incr_decr++;
+        [dict setObject:temp forKey:key];
+        [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
       } else       
         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"decr"]) {
       ValueInfo *temp = [self getVI:key];
        if (temp) {
-         long aLong = *(const long*)[temp.data bytes];
-         aLong--;         
-         sock.mc_vi.data = [NSMutableData dataWithBytes:(const void *)aLong length:sizeof(long)];
-         [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
-         [self sendOut:sock string:[NSString stringWithFormat:@"%d", aLong] tag:tag];
+         temp.incr_decr--;
+         if (temp.incr_decr < 0)
+           temp.incr_decr = 0;
+         [dict setObject:temp forKey:key];
+         [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
        } else       
          [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"delete"]) {
