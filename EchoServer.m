@@ -190,15 +190,22 @@ static NSMutableArray *loggy;
       ValueInfo *temp = [self getVI:key];
 
       if (temp) {
-        // TODO: real incr
-        [self sendOut:sock string:@"1" tag:tag];
+        long aLong = *(const long*)[temp.data bytes];
+        aLong++;
+        
+        sock.mc_vi.data = [NSMutableData dataWithBytes:(const void *)aLong length:sizeof(long)];
+        [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
+        [self sendOut:sock string:[NSString stringWithFormat:@"%d", aLong] tag:tag];
       } else       
         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"decr"]) {
       ValueInfo *temp = [self getVI:key];
        if (temp) {
-         // TODO: real decr
-         [self sendOut:sock string:@"0" tag:tag];
+         long aLong = *(const long*)[temp.data bytes];
+         aLong--;         
+         sock.mc_vi.data = [NSMutableData dataWithBytes:(const void *)aLong length:sizeof(long)];
+         [dict setObject:sock.mc_vi forKey:sock.mc_vi.key];
+         [self sendOut:sock string:[NSString stringWithFormat:@"%d", aLong] tag:tag];
        } else       
          [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"delete"]) {
