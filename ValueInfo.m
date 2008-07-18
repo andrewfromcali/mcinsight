@@ -18,7 +18,6 @@
 @synthesize hits;
 @synthesize flag;
 @synthesize command;
-@synthesize incr_decr;
 
 -(void) init {
   hits=0;

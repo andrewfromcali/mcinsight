@@ -189,22 +189,24 @@ static NSMutableArray *loggy;
     } else if ([command isEqualToString:@"incr"]) {
       ValueInfo *temp = [self getVI:key];
 
-      if (temp) {    
-        temp.incr_decr++;
-        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
+      if (temp) {   
+        NSString *sval = [[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding];
+        unsigned long long val = [sval longLongValue] + 1;
+        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", val] dataUsingEncoding:NSASCIIStringEncoding]];
         [dict setObject:temp forKey:key];
-        [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
+        [self sendOut:sock string:[NSString stringWithFormat:@"%d", val] tag:tag];
       } else       
         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"decr"]) {
       ValueInfo *temp = [self getVI:key];
       if (temp) {
-        temp.incr_decr--;
-        if (temp.incr_decr < 0)
-          temp.incr_decr = 0;
-        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
+        NSString *sval = [[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding];
+        unsigned long long val = [sval longLongValue] - 1;
+        if (val < 0)
+          val = 0;
+        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", val] dataUsingEncoding:NSASCIIStringEncoding]];
         [dict setObject:temp forKey:key];
-        [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
+        [self sendOut:sock string:[NSString stringWithFormat:@"%d", val] tag:tag];
       } else       
         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"delete"]) {

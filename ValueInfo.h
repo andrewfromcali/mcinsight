@@ -17,7 +17,6 @@
   int hits;
   NSString *flag;
   NSTimeInterval insertedAt;
-  long incr_decr;
 }
 
 @property (nonatomic, retain) NSMutableData *data;
@@ -26,6 +25,5 @@
 @property (nonatomic, retain) NSString *flag;
 @property int expiry;
 @property int hits;
-@property long incr_decr;
 @property NSTimeInterval insertedAt;
 @end
