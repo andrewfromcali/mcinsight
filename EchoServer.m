@@ -191,6 +191,7 @@ static NSMutableArray *loggy;
 
       if (temp) {    
         temp.incr_decr++;
+        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
         [dict setObject:temp forKey:key];
         [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
       } else       
@@ -201,6 +202,7 @@ static NSMutableArray *loggy;
          temp.incr_decr--;
          if (temp.incr_decr < 0)
            temp.incr_decr = 0;
+         temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
          [dict setObject:temp forKey:key];
          [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
        } else       
