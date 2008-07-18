@@ -198,15 +198,15 @@ static NSMutableArray *loggy;
         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"decr"]) {
       ValueInfo *temp = [self getVI:key];
-       if (temp) {
-         temp.incr_decr--;
-         if (temp.incr_decr < 0)
-           temp.incr_decr = 0;
-         temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
-         [dict setObject:temp forKey:key];
-         [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
-       } else       
-         [self sendOut:sock string:@"NOT_FOUND" tag:tag];
+      if (temp) {
+        temp.incr_decr--;
+        if (temp.incr_decr < 0)
+          temp.incr_decr = 0;
+        temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", temp.incr_decr] dataUsingEncoding:NSASCIIStringEncoding]];
+        [dict setObject:temp forKey:key];
+        [self sendOut:sock string:[NSString stringWithFormat:@"%d", temp.incr_decr] tag:tag];
+      } else       
+        [self sendOut:sock string:@"NOT_FOUND" tag:tag];
     } else if ([command isEqualToString:@"delete"]) {
       ValueInfo *temp = [dict objectForKey:key];
       if (temp) {
