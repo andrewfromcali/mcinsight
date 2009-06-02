@@ -215,7 +215,10 @@ static NSMutableArray *loggy;
         [[EchoServer getDict] removeObjectForKey:key];
       }
       [self sendOut:sock string:@"DELETED" tag:tag];
-    }
+    } else if ([command isEqualToString:@"flush_all"]) {
+	  [[EchoServer getDict] removeAllObjects];
+	  [self sendOut:sock string:@"DELETED" tag:tag];
+	}
   }
   
   NSData *newline = [@"\n" dataUsingEncoding:NSASCIIStringEncoding];
