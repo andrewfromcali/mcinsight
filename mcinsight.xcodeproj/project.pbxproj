@@ -19,6 +19,7 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		D52C5E1A0FF840A100F25DA7 /* MemcacheSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = D52C5E190FF840A100F25DA7 /* MemcacheSnapshot.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,8 @@
 		32CA4F630368D1EE00C91783 /* mcinsight_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mcinsight_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* mcinsight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mcinsight.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D52C5E180FF840A100F25DA7 /* MemcacheSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemcacheSnapshot.h; sourceTree = "<group>"; };
+		D52C5E190FF840A100F25DA7 /* MemcacheSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemcacheSnapshot.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +82,8 @@
 				000BB3A30E2A986B009BBF2D /* LogDelegate.m */,
 				000BB3A90E2A9B3C009BBF2D /* LogInfo.h */,
 				000BB3AA0E2A9B3C009BBF2D /* LogInfo.m */,
+				D52C5E180FF840A100F25DA7 /* MemcacheSnapshot.h */,
+				D52C5E190FF840A100F25DA7 /* MemcacheSnapshot.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 				001020AB0E27C111006BD8F1 /* ValueInfo.m in Sources */,
 				000BB3A40E2A986B009BBF2D /* LogDelegate.m in Sources */,
 				000BB3AB0E2A9B3C009BBF2D /* LogInfo.m in Sources */,
+				D52C5E1A0FF840A100F25DA7 /* MemcacheSnapshot.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

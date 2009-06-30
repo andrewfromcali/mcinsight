@@ -1,9 +1,11 @@
 
-#import "data_AppDelegate.h"
+#import "data_AppDelegate.h";
 #import "EchoServer.h";
 #import "ValueInfo.h";
+#import "MemcacheSnapshot.h";
 
 static BOOL threadStarted = NO;
+static MemcacheSnapshot *memcacheSnapshot;
 
 @implementation data_AppDelegate
 
@@ -18,14 +20,27 @@ static BOOL threadStarted = NO;
     threadStarted = YES;
   }
   
-  return [[EchoServer getDict] count];
-  //return 1000;
+  return [memcacheSnapshot totalKeys];
 }
 
 - (void)run {
   while (TRUE) {
+	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
+	
+	memcacheSnapshot = [[MemcacheSnapshot alloc] init];
     [table reloadData];
+	[totalKeysTextField setIntValue:[memcacheSnapshot totalKeys]];
+	[totalKeySizeTextField setIntValue:[memcacheSnapshot totalKeySize]];
+	[totalValueSizeTextField setIntValue:[memcacheSnapshot totalValueSize]];
+  
+	
+	//[cacheHitsTextField setIntValue:[memcacheSnapshot cacheHits]];
+//    [cacheMissesTextField setIntValue:[memcacheSnapshot cacheMisses]];
+//	[hitRatioTextField setIntValue:[memcacheSnapshot hitRatio]];
+		
     sleep(1);
+	
+	[autoreleasepool release];
   }
 }
 
@@ -76,37 +91,9 @@ static BOOL threadStarted = NO;
 }
 
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex {
-  NSString *col = [[aTableColumn headerCell] stringValue];
-  
-  NSArray *keys = [[EchoServer getDict] allKeys];
-  
-  NSArray *sortedArray = [keys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-  NSString *key = [sortedArray objectAtIndex:rowIndex];
-  ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
-
-  if ([col isEqualToString:@"key"])
-    return key;
-  if ([col isEqualToString:@"inserted ago"])
-    return [ NSString stringWithFormat: @"%d", lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt)];
-  if ([col isEqualToString:@"expires in"]) {
-    if (vi.expiry == 0)
-      return @"never";
-    int left = vi.expiry - lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt);
-    if (left < 1) {
-      [[EchoServer getDict] removeObjectForKey:key];
-      return @"---";
-    }
-      
-    return [ NSString stringWithFormat: @"%d", left ];
-  }
-  if ([col isEqualToString:@"key size"])
-    return [ NSString stringWithFormat: @"%d", [key length]];
-  if ([col isEqualToString:@"hits"])
-    return [ NSString stringWithFormat: @"%d", vi.hits];
-  if ([col isEqualToString:@"value size"])
-    return [ NSString stringWithFormat: @"%d", [vi.data length]];
-  
-  return @"";
+	NSString *col = [[aTableColumn headerCell] stringValue];
+	NSDictionary *entry = [memcacheSnapshot getEntryAt:rowIndex];
+	return [entry objectForKey:col];
 }
 
 - (void) dealloc {
