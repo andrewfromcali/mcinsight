@@ -56,10 +56,7 @@ static MemcacheSnapshot *memcacheSnapshot;
 
 //- (void)tableViewSelectionIsChanging:(NSNotification *)aNotification {
 - (BOOL)tableView:(NSTableView *)aTableView shouldSelectRow:(int)rowIndex {
-  NSArray *keys = [[EchoServer getDict] allKeys];
-  
-  NSArray *sortedArray = [keys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-  NSString *key = [sortedArray objectAtIndex:rowIndex];
+  NSString *key = [[memcacheSnapshot getEntryAt:rowIndex] objectForKey:@"key"];
   ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
 
   NSString *pops = [[pop selectedItem] title];

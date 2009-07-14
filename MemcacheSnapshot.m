@@ -13,12 +13,12 @@
 @implementation MemcacheSnapshot
 
 NSMutableArray *entries;
-NSInteger *totalKeys;
-NSInteger *cacheHits = 0;
-NSInteger *cacheMisses = 0;
+NSInteger totalKeys;
+NSInteger cacheHits = 0;
+NSInteger cacheMisses = 0;
 NSNumber *hitRatio = 0;
-NSInteger *totalKeySize;
-NSInteger *totalValueSize = 0;
+NSInteger totalKeySize;
+NSInteger totalValueSize = 0;
 
 - (id) init {
 	if (self = [super init]) {
@@ -29,6 +29,7 @@ NSInteger *totalValueSize = 0;
 		totalValueSize = 0;
 		for (NSString *key in keys) {
 			NSLog (@"key -- %@",  key);
+			
 			ValueInfo *vi = [[EchoServer getDict] objectForKey:key];
 			NSDictionary *cacheData;
 			cacheData = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -38,6 +39,7 @@ NSInteger *totalValueSize = 0;
 				[ NSString stringWithFormat: @"%d", [key length]], @"key size",
 				[ NSString stringWithFormat: @"%d", vi.hits], @"hits",
 				[ NSString stringWithFormat: @"%d", [vi.data length]], @"value size",
+				[vi.data description], @"value",
 				nil
 			];
 			[entries addObject: cacheData];
