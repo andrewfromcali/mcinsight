@@ -20,7 +20,7 @@
 @synthesize command;
 
 -(void) init {
-  hits=0;
+	hits=0;
 }
 
 @end

@@ -10,12 +10,21 @@
 
 
 @interface MemcacheSnapshot : NSObject {
-	
+	NSMutableArray *entries;
+	NSInteger totalKeys;
+	NSInteger cacheHits;
+	NSInteger cacheMisses;
+	NSNumber *hitRatio;
+	NSInteger totalKeySize;
+	NSInteger totalValueSize;
 }
 
--(NSInteger)totalKeys;
--(NSInteger)totalKeySize;
--(NSInteger)totalValueSize;
+@property (nonatomic, readonly) NSInteger totalKeys;
+@property (nonatomic, readonly) NSInteger totalKeySize;
+@property (nonatomic, readonly) NSInteger totalValueSize;
+@property (assign) NSMutableArray *entries;
+
 -(NSDictionary*)getEntryAt: (NSInteger)index;
 -(NSString*)formatExpiresAt: (NSInteger)expiresAt insertedAt:(NSInteger)insertedAt;
+-(void)filterBy: (NSString *)filter;
 @end
