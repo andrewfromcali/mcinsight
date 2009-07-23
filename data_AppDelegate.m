@@ -32,16 +32,24 @@ static BOOL threadStarted = NO;
 		
 		if ([descriptors count] > 0) {
 			[memcacheSnapshot.entries sortUsingDescriptors:descriptors];
+		} else {
+			NSSortDescriptor *keyDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"key"
+																		   ascending:YES
+																			selector:@selector(localizedCaseInsensitiveCompare:)] autorelease];
+			
+			NSArray *initDescriptors = [NSArray arrayWithObjects:keyDescriptor, nil];
+			memcacheSnapshot.entries = [memcacheSnapshot.entries sortedArrayUsingDescriptors:initDescriptors];
 		}
+		
 		[memcacheSnapshot filterBy:searchFilter];
 		[table reloadData];
 		[totalKeysTextField setIntValue:[memcacheSnapshot totalKeys]];
-		[totalKeySizeTextField setIntValue:[memcacheSnapshot totalKeySize]];
-		[totalValueSizeTextField setIntValue:[memcacheSnapshot totalValueSize]];
+		[totalKeySizeTextField setStringValue: [memcacheSnapshot stringFromFileSize: [memcacheSnapshot totalKeySize]]];
+		[totalValueSizeTextField setStringValue: [memcacheSnapshot stringFromFileSize: [memcacheSnapshot totalValueSize]]];
 
-		//[cacheHitsTextField setIntValue:[memcacheSnapshot cacheHits]];	
-		//[cacheMissesTextField setIntValue:[memcacheSnapshot cacheMisses]];
-		//[hitRatioTextField setIntValue:[memcacheSnapshot hitRatio]];
+		[cacheHitsTextField setIntValue:[memcacheSnapshot cacheHits]];	
+		[cacheMissesTextField setIntValue:[memcacheSnapshot cacheMisses]];
+		[hitRatioTextField setStringValue:[memcacheSnapshot hitRatio]];		
 		sleep(1);
 		[autoreleasepool release];
 	}

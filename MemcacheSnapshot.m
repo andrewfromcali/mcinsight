@@ -16,11 +16,27 @@
 @synthesize totalKeySize;
 @synthesize totalValueSize;
 @synthesize entries;
+@synthesize cacheHits;
+@synthesize cacheMisses;
+@synthesize hitRatio;
+
 
 - (id) init {
 	if (self = [super init]) {
 		entries = [NSMutableArray array];
 		NSArray *keys = [[EchoServer getDict] allKeys];
+		
+		cacheHits = [EchoServer getTotalHits];
+		cacheMisses = [EchoServer getTotalMisses];
+		float ratio = ((float)cacheHits/(cacheHits + cacheMisses)) * 100;
+		
+		if (cacheMisses > 0) {
+			hitRatio = [ NSString stringWithFormat: @"%.2f %%", ratio];
+		} else {
+			hitRatio = @"0.00 %";
+		}
+		
+		
 		totalKeys = [keys count];
 		totalKeySize = 0;
 		totalValueSize = 0;
@@ -31,11 +47,11 @@
 			NSDictionary *cacheData;
 			cacheData = [NSDictionary dictionaryWithObjectsAndKeys:
 			             key, @"key",
-			             [ NSString stringWithFormat: @"%d", lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt)], @"inserted ago",
+			             [ self stringFromSeconds: lround([[NSDate date] timeIntervalSince1970] - vi.insertedAt)], @"inserted ago",
 			             [self formatExpiresAt: vi.expiry insertedAt:vi.insertedAt], @"expires in",
-			             [ NSString stringWithFormat: @"%d", [key length]], @"key size",
+			             [self stringFromFileSize: [key length]], @"key size",
 			             [ NSString stringWithFormat: @"%d", vi.hits], @"hits",
-			             [ NSString stringWithFormat: @"%d", [vi.data length]], @"value size",
+			             [ self stringFromFileSize: [vi.data length]], @"value size",
 			             vi.data, @"value",
 			             nil
 			            ];
@@ -47,6 +63,30 @@
 	//NSLog (@"totalKeys = %d",  totalKeys);
 
 	return self;
+}
+
+-(NSString *)stringFromFileSize: (NSInteger)theSize{
+	float floatSize = theSize;
+    //if (theSize<1023)
+//        return([NSString stringWithFormat:@"%i b",theSize]);
+    floatSize = floatSize / 1024;
+    if (floatSize<1023)
+        return([NSString stringWithFormat:@"%1.2f KB",floatSize]);
+    floatSize = floatSize / 1024;
+    if (floatSize<1023)
+        return([NSString stringWithFormat:@"%1.1f MB",floatSize]);
+    floatSize = floatSize / 1024;
+	
+    return([NSString stringWithFormat:@"%1.1f GB",floatSize]);	
+}
+
+-(NSString *)stringFromSeconds: (NSInteger)totalSeconds{
+	int hours = totalSeconds / (60*60);
+	int seconds_remaing = totalSeconds % (60*60);
+	int minutes = seconds_remaing / 60;
+	int seconds = seconds_remaing % 60;
+	
+	return [NSString stringWithFormat: @"%d:%02d:%02d",hours, minutes, seconds];
 }
 
 -(void)filterBy: (NSString *)filter {
@@ -74,7 +114,7 @@
 		if (left < 1) {
 			return @"---";
 		} else {
-			return [ NSString stringWithFormat: @"%d", left ];
+			return [ self stringFromSeconds: left ];
 		}
 	}
 }

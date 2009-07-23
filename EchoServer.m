@@ -5,7 +5,8 @@
 
 static NSMutableDictionary *dict;
 static NSMutableArray *loggy;
-
+static NSInteger totalHits;
+static NSInteger totalMisses;
 
 @implementation EchoServer
 
@@ -15,6 +16,12 @@ static NSMutableArray *loggy;
 +(NSMutableArray*)getLog {
 	return loggy;
 }
++(NSInteger)getTotalHits {
+	return totalHits;
+}
++(NSInteger)getTotalMisses {
+	return totalMisses;
+}
 
 -(id) init
 {
@@ -22,7 +29,9 @@ static NSMutableArray *loggy;
 	dict = [NSMutableDictionary dictionary];
 	loggy  = [NSMutableArray array];
 	sockets = [[NSMutableArray alloc] initWithCapacity:2];
-
+	totalHits = 0;
+	totalMisses = 0;
+	
 	AsyncSocket *acceptor = [[AsyncSocket alloc] initWithDelegate:self];
 	[sockets addObject:acceptor];
 	[acceptor release];
@@ -170,6 +179,7 @@ static NSMutableArray *loggy;
 				ValueInfo *temp = [self getVI:[listItems objectAtIndex:i]];
 				if (temp) {
 					temp.hits++;
+					totalHits++;
 					[self sendOut:sock string:[NSString stringWithFormat:@"VALUE %@ %@ %d", temp.key, temp.flag, [temp.data length]] tag:tag];
 
 					LogInfo *info = [LogInfo alloc];
@@ -180,6 +190,8 @@ static NSMutableArray *loggy;
 
 					[sock writeData:temp.data withTimeout:-1 tag:tag];
 					[sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
+				} else {
+					totalMisses++;
 				}
 				i++;
 				if (i >= [listItems count])

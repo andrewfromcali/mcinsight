@@ -9,6 +9,8 @@
 }
 +(NSMutableDictionary*)getDict;
 +(NSMutableArray*)getLog;
++(NSInteger)getTotalHits;
++(NSInteger)getTotalMisses;
 -(id) init;
 -(void) dealloc;
 -(void) acceptOnPortString:(NSString *)str;
