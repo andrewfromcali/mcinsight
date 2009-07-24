@@ -51,6 +51,7 @@ static BOOL threadStarted = NO;
 		[cacheMissesTextField setIntValue:[memcacheSnapshot cacheMisses]];
 		[hitRatioTextField setStringValue:[memcacheSnapshot hitRatio]];		
 		sleep(1);
+		[memcacheSnapshot release];
 		[autoreleasepool release];
 	}
 }
@@ -141,6 +142,7 @@ static BOOL threadStarted = NO;
 
 - (void) dealloc {
 	[table release];
+	[memcacheSnapshot release]; 
 	[super dealloc];
 }
 

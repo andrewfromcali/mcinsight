@@ -84,7 +84,7 @@ static NSInteger totalMisses;
 	info.sid = tag;
 	info.direction = YES;
 	[loggy addObject:info];
-
+	[info release];
 	[sock writeData:[[string stringByAppendingString:@"\r\n"] dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
 }
 
@@ -107,6 +107,7 @@ static NSInteger totalMisses;
 			[loggy addObject:info];
 
 			ValueInfo *temp = [self getVI:sock.mc_vi.key];
+			[info release];
 
 			if ([sock.mc_vi.command isEqualToString:@"add"]) {
 				if (temp == nil) {
@@ -148,7 +149,8 @@ static NSInteger totalMisses;
 	} else {
 		NSString *str = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 		NSString *str2 = [str stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+		
+		[str release];
 		LogInfo *info = [LogInfo alloc];
 		info.data = str2;
 		info.sid = tag;
@@ -158,6 +160,7 @@ static NSInteger totalMisses;
 
 		NSString *command = [listItems objectAtIndex:0];
 		NSString *key = [listItems objectAtIndex:1];
+		[info release];
 
 		if ([command isEqualToString:@"set"] || [command isEqualToString:@"add"] || [command isEqualToString:@"replace"] ||
 		    [command isEqualToString:@"append"] || [command isEqualToString:@"prepend"] || [command isEqualToString:@"cas"]) {
@@ -187,7 +190,8 @@ static NSInteger totalMisses;
 					info.sid = tag;
 					info.direction = YES;
 					[loggy addObject:info];
-
+					[info release];
+					
 					[sock writeData:temp.data withTimeout:-1 tag:tag];
 					[sock writeData:[@"\r\n" dataUsingEncoding:NSASCIIStringEncoding] withTimeout:-1 tag:tag];
 				} else {
@@ -205,6 +209,7 @@ static NSInteger totalMisses;
 			if (temp) {
 				NSString *sval = [[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding];
 				unsigned long long val = [sval longLongValue] + 1;
+				[sval release];
 				temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", val] dataUsingEncoding:NSASCIIStringEncoding]];
 				[dict setObject:temp forKey:key];
 				[self sendOut:sock string:[NSString stringWithFormat:@"%d", val] tag:tag];
@@ -215,6 +220,7 @@ static NSInteger totalMisses;
 			if (temp) {
 				NSString *sval = [[NSString alloc] initWithData:temp.data encoding:NSASCIIStringEncoding];
 				unsigned long long val = [sval longLongValue] - 1;
+				[sval release];
 				if (val < 0)
 					val = 0;
 				temp.data = [NSMutableData dataWithData:[[NSString stringWithFormat:@"%d", val] dataUsingEncoding:NSASCIIStringEncoding]];

@@ -19,6 +19,7 @@
 	[es performSelector:@selector(acceptOnPortString:) withObject:portString afterDelay:1.0];
 	[[NSRunLoop currentRunLoop] run];
 	[EchoServer release];
+	[es release];
 	[pool release];
 }
 
