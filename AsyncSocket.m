@@ -509,7 +509,7 @@ Failed:;
 
 	if (socket == NULL && errPtr)
 		*errPtr = [self getSocketError];
-
+	[socket autorelease];
 	return socket;
 }
 

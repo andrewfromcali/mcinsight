@@ -12,8 +12,10 @@
 
 int main(int argc, char *argv[])
 {
-  NSAutoreleasePool	 *autoreleasepool = [[NSAutoreleasePool alloc] init];    
-  [NSThread detachNewThreadSelector:@selector(run) toTarget:[Runner alloc] withObject:nil];
-  [autoreleasepool release];
-  return NSApplicationMain(argc,  (const char **) argv);
+	NSAutoreleasePool	 *autoreleasepool = [[NSAutoreleasePool alloc] init];
+	Runner *runner	= [Runner alloc];
+	[NSThread detachNewThreadSelector:@selector(run) toTarget:runner withObject:nil];
+	[runner release];
+	[autoreleasepool release];
+	return NSApplicationMain(argc,  (const char **) argv);
 }

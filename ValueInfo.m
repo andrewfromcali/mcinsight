@@ -19,8 +19,11 @@
 @synthesize flag;
 @synthesize command;
 
--(void) init {
-	hits=0;
+-(id) init {
+	if (self = [super init]) {
+		hits=0;
+	}
+	return self;
 }
 
 @end
