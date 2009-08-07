@@ -1,4 +1,3 @@
-
 #import "data_AppDelegate.h";
 #import "EchoServer.h";
 #import "ValueInfo.h";
@@ -38,7 +37,7 @@ static BOOL threadStarted = NO;
 																			selector:@selector(localizedCaseInsensitiveCompare:)] autorelease];
 			
 			NSArray *initDescriptors = [NSArray arrayWithObjects:keyDescriptor, nil];
-			memcacheSnapshot.entries = [memcacheSnapshot.entries sortedArrayUsingDescriptors:initDescriptors];
+			[memcacheSnapshot.entries sortUsingDescriptors:initDescriptors];
 		}
 		
 		[memcacheSnapshot filterBy:searchFilter];
