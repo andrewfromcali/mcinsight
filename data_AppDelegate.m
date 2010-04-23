@@ -98,7 +98,7 @@ static BOOL threadStarted = NO;
 
 	[text setFont:[NSFont fontWithName:@"Courier" size:14.0]];
 	
-	[table selectRow:rowIndex byExtendingSelection:false];
+	[table selectRowIndexes: [NSIndexSet indexSetWithIndex:rowIndex] byExtendingSelection:false];
 	return true;
 }
 
