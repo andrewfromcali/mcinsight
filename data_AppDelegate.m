@@ -83,7 +83,7 @@ static BOOL threadStarted = NO;
 
 		NSTask *myTask = [[NSTask alloc] init];
 		[myTask setLaunchPath: @"/usr/local/bin/ruby"];
-		[myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/mc_data\"); puts Marshal.load(f.read).inspect; f.close"]];
+		[myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/mc_data\"); puts Marshal.load(f.read).inspect; f.close", nil]];
 		[myTask setStandardOutput: [NSFileHandle
 		                            fileHandleForWritingAtPath: tempFile]];
 		[myTask launch];
@@ -134,7 +134,7 @@ static BOOL threadStarted = NO;
 
 - (IBAction) search: (id) sender {
 	searchFilter = [searchField stringValue];
-	NSLog(searchFilter);
+	NSLog(@"%@", searchFilter);
 	[memcacheSnapshot filterBy:searchFilter];
 	[table reloadData];
 }
