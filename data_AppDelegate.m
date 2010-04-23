@@ -77,20 +77,23 @@ static BOOL threadStarted = NO;
 		[tempString release];
 	}
 	else if ([pops isEqualToString:@"Ruby Objects"]) {
-		NSString *tempFile = @"/tmp/mc_results";
-		[[NSFileManager defaultManager] createFileAtPath: tempFile contents: [NSData data] attributes: nil];
-		[[NSFileManager defaultManager] createFileAtPath:@"/tmp/mc_data" contents:value attributes: nil];
-
+    NSPipe *inPipe = [NSPipe pipe];
+    NSPipe *outPipe = [NSPipe pipe];
+    
+    NSFileHandle *inFile = [inPipe fileHandleForWriting];
+    [inFile writeData:value];
+    [inFile closeFile];
+    
 		NSTask *myTask = [[NSTask alloc] init];
 		[myTask setLaunchPath: @"/usr/bin/ruby"];
-		[myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/mc_data\"); puts Marshal.load(f.read).inspect; f.close", nil]];
-		[myTask setStandardOutput: [NSFileHandle
-		                            fileHandleForWritingAtPath: tempFile]];
+		[myTask setArguments: [NSArray arrayWithObjects:@"-e", @"puts Marshal.load(STDIN.read).inspect", nil]];
+    [myTask setStandardInput:  inPipe];
+		[myTask setStandardOutput: outPipe];
 		[myTask launch];
 		[myTask waitUntilExit];
 		[myTask release];
 		
-		NSString *tempString = [[NSString alloc] initWithData:[[NSFileManager defaultManager] contentsAtPath:tempFile]
+		NSString *tempString = [[NSString alloc] initWithData:[[outPipe fileHandleForReading] readDataToEndOfFile]
 													 encoding:NSASCIIStringEncoding];
 		[text setString:tempString];
 		[tempString release];
