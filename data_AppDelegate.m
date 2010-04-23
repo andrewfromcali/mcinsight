@@ -82,7 +82,7 @@ static BOOL threadStarted = NO;
 		[[NSFileManager defaultManager] createFileAtPath:@"/tmp/mc_data" contents:value attributes: nil];
 
 		NSTask *myTask = [[NSTask alloc] init];
-		[myTask setLaunchPath: @"/usr/local/bin/ruby"];
+		[myTask setLaunchPath: @"/usr/bin/ruby"];
 		[myTask setArguments: [NSArray arrayWithObjects:@"-e", @"f = File.open(\"/tmp/mc_data\"); puts Marshal.load(f.read).inspect; f.close", nil]];
 		[myTask setStandardOutput: [NSFileHandle
 		                            fileHandleForWritingAtPath: tempFile]];
