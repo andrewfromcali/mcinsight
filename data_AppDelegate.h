@@ -1,7 +1,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <AppKit/AppKit.h>
-#import "MemcacheSnapshot.h";
+#import "MemcacheSnapshot.h"
 
 @interface data_AppDelegate : NSObject {
 	IBOutlet NSTableView *table;    
