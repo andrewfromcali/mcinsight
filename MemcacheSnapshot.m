@@ -6,9 +6,9 @@
 //  Copyright 2009 Tierra Innovation. All rights reserved.
 //
 
-#import "MemcacheSnapshot.h";
-#import "EchoServer.h";
-#import "ValueInfo.h";
+#import "MemcacheSnapshot.h"
+#import "EchoServer.h"
+#import "ValueInfo.h"
 
 @implementation MemcacheSnapshot
 
